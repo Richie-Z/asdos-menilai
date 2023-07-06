@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Matakuliah extends Model
 {
     protected $table = "matakuliah";
-    protected $fillable = ["nama", "nilai_laporan", "max_nilai"];
+    protected $fillable = ["nama", "nilai_laporan", "max_nilai", "kelas"];
+    protected $appends = ["nilai_jawaban"];
 
     protected function nilaiJawaban(): Attribute
     {

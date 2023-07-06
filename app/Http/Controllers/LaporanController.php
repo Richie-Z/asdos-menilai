@@ -3,63 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laporan;
+use App\Models\Matakuliah;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $laporan = Laporan::orderBy("nama", "asc")->get();
+        return view("laporan.index", compact("laporan"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view("laporan.create", ["matakuliah" => Matakuliah::all()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        try {
+            $laporan = new Laporan();
+            $laporan->nama = $request->nama;
+            $laporan->jumlah_soal = $request->jumlah_soal;
+            $laporan->matakuliah_id = $request->matakuliah_id;
+            $laporan->save();
+            return redirect()->route("laporan.index")->with("status", "Berhasil Tambah");
+        } catch (err $err) {
+            return redirect()->route("laporan.index")->with("status", "Gagal");
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Laporan $laporan)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Laporan $laporan)
     {
-        //
+        return view("laporan.edit", ["laporan" => $laporan, "matakuliah" => Matakuliah::all()]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Laporan $laporan)
     {
-        //
+        try {
+            $laporan->nama = $request->nama;
+            $laporan->jumlah_soal = $request->jumlah_soal;
+            $laporan->matakuliah_id = $request->matakuliah_id;
+            $laporan->save();
+            return redirect()->route("laporan.index")->with("status", "Berhasil Edit");
+        } catch (err $err) {
+            return redirect()->route("laporan.index")->with("status", "Gagal");
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Laporan $laporan)
     {
-        //
+        try {
+            $laporan->delete();
+            return redirect()->route("laporan.index")->with("status", "Berhasil Hapus");
+        } catch (err $err) {
+            return redirect()->route("laporan.index")->with("status", "Berhasil Hapus");
+        }
     }
 }

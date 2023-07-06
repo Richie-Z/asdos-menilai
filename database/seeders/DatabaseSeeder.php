@@ -14,9 +14,12 @@ class DatabaseSeeder extends Seeder
 
     private function matkul(): void
     {
-        $matkul = new Matakuliah();
-        $matkul->nama = "Basis Data";
-        $matkul->nilai_laporan = 15;
-        $matkul->save();
+        for ($i = 0; $i < 2; $i++) {
+            $matkul = new Matakuliah();
+            $matkul->nama = "Basis Data K" . $i + 1;
+            $matkul->kelas = $i + 1;
+            $matkul->nilai_laporan = 15;
+            $matkul->save();
+        }
     }
 }

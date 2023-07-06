@@ -2,64 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\matakuliah;
+use App\Models\Matakuliah;
 use Illuminate\Http\Request;
 
 class MatakuliahController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $matakuliah = Matakuliah::all();
+        return view("matakuliah.index", compact("matakuliah"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view("matakuliah.create");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        try {
+            $matakuliah = new Matakuliah();
+            $matakuliah->nama = $request->nama;
+            $matakuliah->kelas = $request->kelas;
+            $matakuliah->nilai_laporan = $request->nilai_laporan;
+            $matakuliah->max_nilai = $request->max_nilai;
+            $matakuliah->save();
+            return redirect()->route("matakuliah.index")->with("status", "Berhasil Tambah");
+        } catch (err $err) {
+            return redirect()->route("matakuliah.index")->with("status", "Gagal");
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(matakuliah $matakuliah)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(matakuliah $matakuliah)
     {
-        //
+        return view("matakuliah.edit", ["matkul" => $matakuliah]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, matakuliah $matakuliah)
     {
-        //
+        try {
+            $matakuliah->nama = $request->nama;
+            $matakuliah->kelas = $request->kelas;
+            $matakuliah->nilai_laporan = $request->nilai_laporan;
+            $matakuliah->max_nilai = $request->max_nilai;
+            $matakuliah->save();
+            return redirect()->route("matakuliah.index")->with("status", "Berhasil Edit");
+        } catch (err $err) {
+            return redirect()->route("matakuliah.index")->with("status", "Gagal");
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(matakuliah $matakuliah)
     {
-        //
+        try {
+            $matakuliah->delete();
+            return redirect()->route("matakuliah.index")->with("status", "Berhasil Hapus");
+        } catch (err $err) {
+            return redirect()->route("matakuliah.index")->with("status", "Berhasil Hapus");
+        }
     }
 }

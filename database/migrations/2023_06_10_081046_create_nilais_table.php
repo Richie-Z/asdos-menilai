@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('nilai', function (Blueprint $table) {
             $table->id();
             $table->json("jawaban");
+            $table->integer("nilai_laporan");
             $table->unsignedBigInteger("mahasiswa_id");
             $table->unsignedBigInteger("laporan_id");
             $table->timestamps();

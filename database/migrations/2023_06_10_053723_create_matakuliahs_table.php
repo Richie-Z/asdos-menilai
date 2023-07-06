@@ -11,8 +11,9 @@ return new class extends Migration
         Schema::create('matakuliah', function (Blueprint $table) {
             $table->id();
             $table->string("nama");
-            $table->integer("nilai_laporan")->default(0);
-            $table->integer("max_nilai")->default(100);
+            $table->enum("kelas", [1, 2]);
+            $table->integer("nilai_laporan")->nullable()->default(0);
+            $table->integer("max_nilai")->nullable()->default(100);
             $table->timestamps();
         });
     }
